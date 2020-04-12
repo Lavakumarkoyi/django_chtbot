@@ -1,0 +1,1439 @@
+{% extends 'bots/navigation.html' %} {% block response %}
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
+<!-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script> -->
+<style type="text/css">
+    body {
+        margin: 0;
+        outline: none;
+    }
+    
+    #Response_wrapper {
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        margin-left: 12%;
+    }
+    
+    .Response_content {
+        max-width: 1100px;
+        width: 100%;
+        min-width: 260px;
+        margin: 5%;
+        transition: 0.3s ease;
+    }
+    
+    @media screen and (max-width: 512px) {
+        .Response_content {
+            margin: 0 4%;
+            margin-top: 5%;
+        }
+    }
+    /* Response_Tabs menu */
+    
+    .Response_tabs {
+        margin: 0;
+        background-image: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 80px;
+        border-radius: 2px 2px 0px 0px;
+    }
+    
+    @media screen and (max-width: 512px) {
+        .Response_tabs {
+            height: 40px;
+        }
+    }
+    /* Tab Links */
+    
+    .Response_tablinks {
+        background: #dedede;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        width: 25%;
+        height: 80px;
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 16px;
+        overflow: hidden;
+        transition: 0.3s ease;
+        border-right: 1px solid #ccc;
+    }
+    
+    @media screen and (max-width: 512px) {
+        .Response_tablinks {
+            height: 40px;
+            font-size: 12px;
+        }
+    }
+    
+    .Response_tablinks:before {
+        background-image: linear-gradient(135deg, #ff5e14 0%, #6a62c7 100%);
+        content: "";
+        width: 100%;
+        height: 0px;
+        position: absolute;
+        top: 0;
+        left: 0;
+        transition: 0.3s ease-in-out;
+        z-index: 2;
+    }
+    /*tab buttons hover*/
+    
+    .Response_tablinks:hover::before {
+        height: 100%;
+        z-index: 2;
+        bottom: 0;
+    }
+    
+    @media screen and (max-width: 512px) {
+        .Response_tablinks:hover::before {
+            height: 0;
+        }
+    }
+    /* Tab active */
+    
+    .Response_tablinks.active {
+        background-color: white;
+        z-index: 0;
+        border-right: 0px;
+        border-left: 0px;
+        height: 110px;
+        bottom: 0px;
+        overflow: hidden;
+        outline: none;
+    }
+    
+    @media screen and (max-width: 512px) {
+        .Response_tablinks.active {
+            height: 60px;
+        }
+    }
+    
+    .Response_tablinks.active:before {
+        content: "";
+        width: 100%;
+        height: 5px;
+        top: 0;
+        left: 0;
+    }
+    /* Response_Tabs text */
+    
+    .Response_tablinks.active p,
+    .Response_tablinks.active:hover p {
+        opacity: 1;
+        background: #413e66;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+    
+    .Response_tablinks p {
+        opacity: 0.6;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 2;
+        transition: 0.5s ease;
+        padding: 0;
+        margin: 0;
+        color: #ff5e14;
+        backface-visibility: hidden;
+        font-weight: 600;
+        font-size: 1em;
+    }
+    
+    .Response_tablinks:hover p {
+        color: white;
+        opacity: 1;
+    }
+    
+    @media screen and (max-width: 512px) {
+        .Response_tablinks:hover p {
+            color: #686868;
+            opacity: 0.6;
+        }
+    }
+    /* Response_Tabs text bigger */
+    
+    .Response_tablinks p:before {
+        content: attr(data-title);
+        position: absolute;
+        height: auto;
+        width: auto;
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0.1;
+        font-size: 40px;
+        transition: 1s ease-out;
+        z-index: -1;
+        font-weight: 600;
+        top: 110%;
+    }
+    
+    @media screen and (max-width: 512px) {
+        .Response_tablinks p:before {
+            display: none;
+        }
+    }
+    
+    .Response_tablinks:hover p:before {
+        opacity: 0.1;
+        font-size: 40px;
+        top: -80%;
+    }
+    /* tab content */
+    
+    .Response_wrapper_tabcontent {
+        background-color: white;
+        margin-top: 0px;
+        z-index: 1;
+        position: relative;
+        opacity: 1;
+        padding: 40px 60px;
+        overflow: hidden;
+        transition: all 1s ease;
+        top: 0;
+        border-left: 1px solid #ff5e14;
+        border-right: 1px solid #413e66;
+    }
+    
+    .Response_tabcontent {
+        display: none;
+        min-height: 180px;
+    }
+    
+    @keyframes tab {
+        from {
+            top: -40px;
+        }
+        to {
+            top: 0px;
+        }
+    }
+    
+    .Response_tabcontent.active {
+        transition: all 1s ease;
+        display: block;
+    }
+    /* Tab content line */
+    
+    .Response_wrapper_tabcontent:after {
+        content: "";
+        height: 5px;
+        width: 100%;
+        position: absolute;
+        background-image: linear-gradient(135deg, #ff5e14 0%, #413e66 100%);
+        left: 0;
+        bottom: 0;
+        z-index: -2;
+        transition: all 1s ease;
+    }
+    /* Title */
+    
+    .Response_tabcontent h3 {
+        font-size: 40px;
+        top: 90px;
+        transform: rotate(90deg);
+        position: absolute;
+        left: -90px;
+        opacity: 0.2;
+        width: 200px;
+        height: 60px;
+        background: -webkit-linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: #413e66;
+        padding: 0;
+        animation: city 1s ease;
+    }
+    
+    @media screen and (max-width: 512px) {
+        .Response_tabcontent h3 {
+            top: 65px;
+        }
+    }
+    
+    @keyframes city {
+        from {
+            left: -150px;
+        }
+        to {
+            left: -90px;
+        }
+    }
+    /* Text*/
+    
+    .Response_tabcontent p {
+        color: #686868;
+        margin: 0;
+        padding: 0;
+        line-height: 28px;
+        font-weight: 100;
+        transition: all 1s ease;
+        animation: fadeEffect 0.6s ease;
+        width: 100%;
+        font-size: 16px;
+    }
+    
+    @media screen and (max-width: 512px) {
+        .Response_tabcontent p {
+            font-size: 14px;
+            line-height: 26px;
+        }
+    }
+    
+    @keyframes fadeEffect {
+        from {
+            opacity: 0;
+            margin-left: 30px;
+        }
+        to {
+            opacity: 1;
+            margin-left: 0;
+        }
+    }
+    
+    .ResponseForm>label {
+        font-size: 13px;
+        color: #888;
+    }
+    
+     :focus {
+        outline: none;
+    }
+    
+    .InputEffect {
+        position: relative;
+    }
+    
+    .InputEffect>input[type="text"] {
+        color: #333;
+        width: 90%;
+        box-sizing: border-box;
+        letter-spacing: 1px;
+        height: 36px;
+    }
+    
+    .effect {
+        border: 0;
+        padding: 5px 0 7px;
+        border: 1px solid transparent;
+        border-bottom-color: #ccc;
+        transition: 0.4s;
+    }
+    
+    .effect:focus {
+        padding: 5px 14px 7px;
+        transition: 0.4s;
+    }
+    
+    .effect~.focus-border {
+        position: absolute;
+        height: 36px;
+        bottom: 0;
+        right: 10%;
+        width: 0;
+        transition: 0.4s;
+    }
+    
+    .effect:focus~.focus-border {
+        width: 90%;
+        transition: 0.4s;
+        border: 2px solid #413e66;
+        border-radius: 5px;
+        cursor: text;
+    }
+    
+    .form-control:focus {
+        box-shadow: none;
+    }
+    
+    .js-remove-option {
+        height: 38px;
+        width: 82.66px;
+        margin-top: 24px;
+    }
+    
+    .js-remove-response {
+        float: right;
+        margin-top: -4%;
+    }
+    
+    .js-remove-select {
+        float: right;
+        margin-top: -4%;
+    }
+    
+    .Choices>p {
+        font-size: 1.3em;
+        font-weight: 500;
+        margin-bottom: 5px;
+        margin-top: 13px;
+        color: #888;
+    }
+    
+    .form-group>select {
+        border: none;
+        border-bottom: 1px solid #ccc;
+        width: 90%;
+        height: 36px;
+    }
+    
+    .form-check-label {
+        font-size: 14px;
+        margin-left: 20px;
+    }
+    
+    #optionsvisible {
+        margin-left: 0px;
+    }
+    
+    .ResponseForm>input[type="file"] {
+        border: none;
+        border-bottom: 1px solid #ccc;
+        width: 90%;
+        padding: 0px 15px;
+    }
+    
+    .AttachmentActive {
+        padding: 5px 15px;
+        background-color: #413e66;
+        color: #fff;
+        border-radius: 5px;
+    }
+    
+    .uploadlabel {
+        margin-left: 0px;
+        cursor: pointer;
+    }
+    /************NEW CSS For Attachment*****************/
+    
+    .attachmentFile ul {
+        margin: 0;
+        padding: 0;
+    }
+    
+    .attachmentFile li {
+        display: inline-block;
+        background: #fff;
+        border-radius: 7px 7px 0px 0px;
+    }
+    
+    .attachmentFile a {
+        display: block;
+        padding: 10px 15px;
+        font-weight: bold;
+        color: #413e66;
+    }
+    
+    .attachmentFile li.active {
+        background: #413e66;
+        color: #fff;
+    }
+    
+    .attachmentFile a:hover {
+        text-decoration: none !important;
+    }
+    
+    .attachmentFile li.active a {
+        color: inherit;
+    }
+    
+    .attachemnt-content {
+        padding: 15px 0;
+        background: #fff;
+        overflow: hidden;
+    }
+    
+    .attachemnt-content img {
+        margin-right: 10px;
+    }
+    
+    .attachemnt-content section:not(:first-child) {
+        display: none;
+    }
+    /************NEW CSS For Attachment END*****************/
+</style>
+
+<section id="Response_wrapper">
+    <div class="Response_content">
+        <div class="Response_tabs">
+            <!-- Tab links -->
+            <button class="Response_tablinks active" data-country="Text">
+        <p data-title="Text">Text</p>
+      </button>
+            <button class="Response_tablinks" data-country="Multichoice">
+        <p data-title="Multichoice">Multiple Choice</p>
+      </button>
+            <button class="Response_tablinks" data-country="Multiselect">
+        <p data-title="Multiselect">Multiple Selection</p>
+      </button>
+            <!-- <button class="Response_tablinks" data-country="Image"><p data-title="Image">Image</p></button> -->
+            <button class="Response_tablinks" data-country="Attachment">
+        <p data-title="Attachment">Attachment</p>
+      </button>
+            <button class="Response_tablinks" data-country="Rating">
+        <p data-title="Rating">Rating Type</p>
+      </button>
+        </div>
+        <!-- Tab content -->
+        <div class="Response_wrapper_tabcontent">
+            <div id="Text" class="Response_tabcontent active">
+                <h3>Text</h3>
+                <form method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" class="form-control" name="IntentresponseType" value="text" />
+                    <div class="form-group ResponseForm InputEffect">
+                        <label for="responsetext">Response Text:</label>
+                        <input class="effect form-control" type="text" name="Responsetext" placeholder="Please Enter the Response Text..." required="true" />
+                        <span class="focus-border"></span>
+                    </div>
+                    <div id="newalternate">
+                        <div class="form-group ResponseForm InputEffect">
+                            <label for="alternateresponsetext">Alternate Response Text:</label
+              >
+              <input
+                type="text"
+                class="effect form-control"
+                name="alternateResponsetext"
+                placeholder="Please Enter the Alternate Response Text..."
+              />
+              <span class="focus-border"></span>
+            </div>
+          </div>
+          <button class="btn btn-primary js-add-response">Add</button><br />
+          <div class="float-right">
+            <button class="btn btn-primary" type="submit">Save</button>
+            <!-- <button class="btn btn-primary">Preview</button> -->
+          </div>
+        </form>
+      </div>
+
+      <div id="Multichoice" class="Response_tabcontent">
+        <h3>MultiChoice</h3>
+        <form method="POST">
+          {% csrf_token %}
+          <input type="hidden" value="multichoice" name="IntentresponseType" />
+          <div class="form-group ResponseForm InputEffect">
+            <label for="responsetext">Response Text:</label>
+                            <input class="effect form-control" type="text" id="responsetext" placeholder="Please Enter the Response Text..." name="responsetext" />
+                            <span class="focus-border"></span>
+                        </div>
+                        <div class="form-group ResponseForm InputEffect">
+                            <label for="alternateresponsetext">Alternate Response Text:</label>
+                            <input type="text" class="effect form-control" id="alternateresponsetext" placeholder="Please Enter the Alternate Response Text..." name="alternateresponsetext" />
+                            <span class="focus-border"></span>
+                        </div>
+                        <div class="Choices">
+                            <p>Choices:</p>
+                            <div class="col-md-12" id="newoption">
+                                <div class="row form-group">
+                                    <div class="col-md-3 col-3">
+                                        <div class="row form-group ResponseForm InputEffect">
+                                            <label for="option1">Option 1:</label>
+                                            <input class="effect form-control" type="text" name="option" id="option1" placeholder="Option 1" />
+                                            <span class="focus-border"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 col-3">
+                                        <div class="row form-group ResponseForm InputEffect">
+                                            <label for="value1">Value 1:</label>
+                                            <input class="effect form-control" type="text" name="value" id="value1" placeholder="Value 1" />
+                                            <span class="focus-border"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 col-3">
+                                        <div class="row form-group ResponseForm InputEffect">
+                                            <label for="callbackaction">Call back Action:</label>
+                                            <select id="slct" name="redirection" onchange="change(this.id, 'SelectedOptionMultiple'.concat((this.id).slice(4,10)))">
+                      <option value="1">No action</option>
+                      <option value="2">Enter redirect url</option>
+                      <option value="3">Redirect to intent id</option>
+                      <option value="4">Redirect to flow identifier</option>
+                      <option value="5">Bot termination</option>
+                      <option value="6">Reply with text</option>
+                      <option value="7">Redirect to Group</option>
+                    </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2 col-2">
+                                        <div class="row form-group ResponseForm InputEffect SelectedOptionMultiple" id="SelectedOptionMultiple">
+                                            <!-- <script>var thisid = $('.som').attr('id'); </script> -->
+                                            <!-- <input id="selectedhiderating" name="prodId" type="hidden" value="$('.SelectedOptionMultiple').attr('id')"> -->
+                                            <label for="indentexternal">Intent ID / External Url</label>
+                                            <input class="effect form-control" type="text" placeholder="Enter Text Message" disabled style="cursor: not-allowed;" />
+                                            <input type="hidden" name="actions" value="NoAction" />
+                                            <span class="focus-border"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="form-group ResponseForm">
+                                        <input class="form-check-input" type="checkbox" value="" id="optionsvisible" />
+                                        <label class="form-check-label" for="optionsvisible">
+                    Make options visible in randomised manner</label
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+          <button class="btn btn-primary js-add-option">Add Option</button
+          ><br />
+          <div class="float-right">
+            <button class="btn btn-primary" type="submit">Save</button>
+            <!-- <button class="btn btn-primary">Preview</button> -->
+          </div>
+        </form>
+      </div>
+
+      <div id="Multiselect" class="Response_tabcontent">
+        <h3>MultiSelect</h3>
+        <form method="POST">
+          {% csrf_token %}
+          <input
+            type="hidden"
+            value="mutipleSelection"
+            name="IntentresponseType"
+          />
+          <div class="form-group ResponseForm InputEffect">
+            <label for="responsetext">Response Text:</label>
+                                        <input class="effect form-control" type="text" id="responsetext" placeholder="Please Enter the Response Text..." name="responsetext" />
+                                        <span class="focus-border"></span>
+                                    </div>
+                                    <div class="Choices">
+                                        <p>Choices:</p>
+
+                                        <div class="form-group">
+                                            <div class="form-group ResponseForm InputEffect">
+                                                <label for="option1">Option 1:</label>
+                                                <input class="effect form-control" type="text" id="option1" placeholder="Option 1" name="option" />
+                                                <span class="focus-border"></span>
+                                            </div>
+                                            <div id="newselectoption">
+                                                <div class="form-group ResponseForm InputEffect">
+                                                    <label for="option2">Option 2:</label>
+                                                    <input class="effect form-control" type="text" id="option2" placeholder="Option 2" name="alternateoption" />
+                                                    <span class="focus-border"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <button class="btn btn-primary js-add-select">Add</button><br />
+                                        <div class="float-right">
+                                            <button class="btn btn-primary" type="submit">Save</button>
+                                            <!-- <button class="btn btn-primary">Preview</button> -->
+                                        </div>
+                                    </div>
+                </form>
+                </div>
+
+                <!-- <div id="Image" class="Response_tabcontent">
+            <h3>Image</h3>
+            <p>Image is in the middle of Spain, in the Community of Image. The Community is a large area that includes the city as well as small towns and villages outside the city. 7 million people live in the Community. More than 3 million live in the city itself. 
+            </p>
+         </div> -->
+                <div id="Attachment" class="Response_tabcontent">
+                    <h3>Attachment</h3>
+                    <div class="attachmentFile">
+                        <ul>
+                            <li class="active">
+                                <a href="#attachmentfilefrmsys">Upload File From System</a>
+                            </li>
+                            <li><a href="#attachmentfilefrmurl">File From URL</a></li>
+                        </ul>
+                    </div>
+                    <section class="attachemnt-content">
+                        <section id="attachmentfilefrmsys">
+                            <form method="POST" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                <input type="hidden" value="attachment" name="IntentresponseType" />
+                                <input type="hidden" name="imgtype" value="filesys" />
+                                <div id="fileinput">
+                                    <div class="form-group">
+                                        <div class="form-group ResponseForm">
+                                            <label for="uploadfilefromsystem">Upload Attachment From System:</label
+                    >
+                    <input
+                      class="form-control"
+                      type="file"
+                      id="uploadfilefromsys"
+                      name="image"
+                    />
+                  </div>
+                  <div class="form-group ResponseForm InputEffect">
+                    <label for="attachmenttitle">Attachment Title:</label>
+                                            <input class="form-control effect" type="text" id="attachmenttitle" placeholder="Attachment Title" name="attachmenttitle" />
+                                            <span class="focus-border"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button class="btn btn-primary js-add-attachement1">
+                Add Another Attachment</button
+              ><br />
+              <div class="float-right">
+                <button class="btn btn-primary">Save</button>
+                </div>
+                </form>
+                </section>
+                <section id="attachmentfilefrmurl">
+                    <form method="POST">
+                        {% csrf_token %}
+                        <input type="hidden" value="attachment" name="IntentresponseType" />
+                        <input type="hidden" value="imgtype" value="imageurl" />
+                        <div id="urlinput">
+                            <div class="form-group">
+                                <div class="form-group">
+                                    <label class="form-check-label uploadlabel" for="urlfile" id="urlfile">File From URL</label
+                    >
+                  </div>
+                  <div
+                    class="form-group ResponseForm InputEffect"
+                    id="uploadfileurl"
+                  >
+                    <input
+                      class="form-control effect"
+                      type="text"
+                      id="uploadfilefromurl"
+                      placeholder="Please Enter File URL"
+                      name="image"
+                    />
+                    <span class="focus-border"></span>
+                  </div>
+                  <div class="form-group ResponseForm InputEffect">
+                    <label for="attachmenttitle">Attachment Title:</label>
+                                    <input class="form-control effect" type="text" id="attachmenttitle" placeholder="Attachment Title" name="attachmenttitle" />
+                                    <span class="focus-border"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button class="btn btn-primary js-add-attachement2">
+                Add Another Attachment</button
+              ><br />
+              <div class="float-right">
+                <button class="btn btn-primary">Save</button>
+                        </div>
+                    </form>
+                </section>
+                </section>
+
+                <!-- <div class="float-right">
+                <button class="btn btn-primary">Save</button>
+                <button class="btn btn-primary">Preview</button>
+              </div> -->
+                </div>
+
+                <!--Attachment type response ends-->
+                <div id="Rating" class="Response_tabcontent">
+                    <h3>RatingType</h3>
+                    <div class="form-group ResponseForm InputEffect">
+                        <label for="ratingtext">Rating Text:</label>
+                        <input class="form-control effect" type="text" id="ratingtext" placeholder="Please Enter the Rating Text" />
+                        <span class="focus-border"></span>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="row form-group ResponseForm InputEffect">
+                                    <label for="onestar">Response for 1 star:</label>
+                                    <input class="form-control effect" type="text" id="onestar" placeholder="Please Enter the Rating Text" />
+                                    <span class="focus-border"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="row form-group ResponseForm InputEffect">
+                                    <label for="action">Action:</label>
+                                    <select class="form-control" id="action">
+                  <option value="1">No action</option>
+                  <option value="2">Enter redirect url</option>
+                  <option value="3">Redirect to intent id</option>
+                  <option value="4">Redirect to flow identifier</option>
+                  <option value="5">Bot termination</option>
+                  <option value="6">Reply with text</option>
+                  <option value="7">Redirect to Group</option>
+                </select>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="row form-group ResponseForm InputEffect">
+                                    <label for="enterratingtext">Enter text / Search Intent</label>
+                                    <input class="form-control effect" type="text" id="enterratingtext" placeholder="Enter Text Message" />
+                                    <span class="focus-border"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="row form-group ResponseForm InputEffect">
+                                    <label for="onestar">Response for 2 star:</label>
+                                    <input class="form-control effect" type="text" id="onestar" placeholder="Please Enter the Rating Text" />
+                                    <span class="focus-border"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="row form-group ResponseForm InputEffect">
+                                    <label for="action">Action:</label>
+                                    <select class="form-control" id="action">
+                  <option value="1">No action</option>
+                  <option value="2">Enter redirect url</option>
+                  <option value="3">Redirect to intent id</option>
+                  <option value="4">Redirect to flow identifier</option>
+                  <option value="5">Bot termination</option>
+                  <option value="6">Reply with text</option>
+                  <option value="7">Redirect to Group</option>
+                </select>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="row form-group ResponseForm InputEffect">
+                                    <label for="enterratingtext">Enter text / Search Intent</label>
+                                    <input class="form-control effect" type="text" id="enterratingtext" placeholder="Enter Text Message" />
+                                    <span class="focus-border"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="row form-group ResponseForm InputEffect">
+                                    <label for="onestar">Response for 3 star:</label>
+                                    <input class="form-control effect" type="text" id="onestar" placeholder="Please Enter the Rating Text" />
+                                    <span class="focus-border"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="row form-group ResponseForm InputEffect">
+                                    <label for="action">Action:</label>
+                                    <select class="form-control" id="action">
+                  <option value="1">No action</option>
+                  <option value="2">Enter redirect url</option>
+                  <option value="3">Redirect to intent id</option>
+                  <option value="4">Redirect to flow identifier</option>
+                  <option value="5">Bot termination</option>
+                  <option value="6">Reply with text</option>
+                  <option value="7">Redirect to Group</option>
+                </select>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="row form-group ResponseForm InputEffect">
+                                    <label for="enterratingtext">Enter text / Search Intent</label>
+                                    <input class="form-control effect" type="text" id="enterratingtext" placeholder="Enter Text Message" />
+                                    <span class="focus-border"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="row form-group ResponseForm InputEffect">
+                                    <label for="onestar">Response for 4 star:</label>
+                                    <input class="form-control effect" type="text" id="onestar" placeholder="Please Enter the Rating Text" />
+                                    <span class="focus-border"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="row form-group ResponseForm InputEffect">
+                                    <label for="action">Action:</label>
+                                    <select class="form-control" id="action">
+                  <option value="1">No action</option>
+                  <option value="2">Enter redirect url</option>
+                  <option value="3">Redirect to intent id</option>
+                  <option value="4">Redirect to flow identifier</option>
+                  <option value="5">Bot termination</option>
+                  <option value="6">Reply with text</option>
+                  <option value="7">Redirect to Group</option>
+                </select>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="row form-group ResponseForm InputEffect">
+                                    <label for="enterratingtext">Enter text / Search Intent</label>
+                                    <input class="form-control effect" type="text" id="enterratingtext" placeholder="Enter Text Message" />
+                                    <span class="focus-border"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="row form-group ResponseForm InputEffect">
+                                    <label for="onestar">Response for 5 star:</label>
+                                    <input class="form-control effect" type="text" id="onestar" placeholder="Please Enter the Rating Text" />
+                                    <span class="focus-border"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="row form-group ResponseForm InputEffect">
+                                    <label for="action">Action:</label>
+                                    <select class="form-control" id="action">
+                  <option value="1">No action</option>
+                  <option value="2">Enter redirect url</option>
+                  <option value="3">Redirect to intent id</option>
+                  <option value="4">Redirect to flow identifier</option>
+                  <option value="5">Bot termination</option>
+                  <option value="6">Reply with text</option>
+                  <option value="7">Redirect to Group</option>
+                </select>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="row form-group ResponseForm InputEffect">
+                                    <label for="enterratingtext">Enter text / Search Intent</label>
+                                    <input class="form-control effect" type="text" id="enterratingtext" placeholder="Enter Text Message" />
+                                    <span class="focus-border"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="float-right">
+                        <button class="btn btn-primary">Save</button>
+                        <!-- <button class="btn btn-primary">Preview</button> -->
+                    </div>
+                </div>
+                </div>
+            </div>
+</section>
+
+<link href="/static/css/create-bot.css" rel="stylesheet" />
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
+<script type="text/javascript">
+    var Response_tabLinks = document.querySelectorAll(".Response_tablinks");
+    var Response_tabContent = document.querySelectorAll(".Response_tabcontent");
+
+    Response_tabLinks.forEach(function(el) {
+        el.addEventListener("click", openTabs);
+    });
+
+    function openTabs(el) {
+        var btnTarget = el.currentTarget;
+        var country = btnTarget.dataset.country;
+
+        Response_tabContent.forEach(function(el) {
+            el.classList.remove("active");
+        });
+
+        Response_tabLinks.forEach(function(el) {
+            el.classList.remove("active");
+        });
+
+        document.querySelector("#" + country).classList.add("active");
+
+        btnTarget.classList.add("active");
+    }
+
+    //For input field response
+    (function() {
+        //add rows when add button is clicked
+        $(document).on("click", ".js-add-response", function(e) {
+            var clone, examsList;
+            e.preventDefault();
+            examsList = $("#newalternate");
+            clone = examsList.children(".form-group:first").clone(true);
+            clone.append(
+                $("<button>")
+                .addClass("btn btn-danger js-remove-response")
+                .html("Remove")
+            );
+            //reset values in cloned inputs and
+            //add enumerated ID's to input fields
+            clone
+                .find("input")
+                .val("")
+                .attr("name", function() {
+                    return (
+                        $(this).attr("name") +
+                        "_" +
+                        (examsList.children(".form-group").length + 1)
+                    );
+                });
+            return examsList.append(clone);
+        });
+
+        //remove rows when remove button is clicked
+        $(document).on("click", ".js-remove-response", function(e) {
+            e.preventDefault();
+            return $(this)
+                .parent()
+                .remove();
+        });
+    }.call(this));
+
+    //Add Option
+    (function() {
+        //add rows when add button is clicked
+        $(document).on("click", ".js-add-option", function(e) {
+            var clone, examsList;
+            e.preventDefault();
+            examsList = $("#newoption");
+            clone = examsList.children(".form-group:first").clone(true);
+            clone.append(
+                $("<button>")
+                .addClass("btn btn-danger js-remove-option col-md-1")
+                .html("Remove")
+            );
+            //reset values in cloned inputs and
+            //add enumerated ID's to input fields
+            clone
+                .find("input")
+                .val("")
+                .attr("name", function() {
+                    return (
+                        $(this).attr("name") +
+                        "_" +
+                        (examsList.children(".form-group").length + 1)
+                    );
+                });
+            clone.find("select").attr("name", function() {
+                return (
+                    $(this).attr("name") +
+                    "_" +
+                    (examsList.children(".form-group").length + 1)
+                );
+            });
+
+            clone.find("select").attr("id", function() {
+                return (
+                    $(this).attr("id") +
+                    "_" +
+                    (examsList.children(".form-group").length + 1)
+                );
+            });
+
+            clone.find("input").attr("placeholder", function() {
+                console.log($(this).attr("placeholder"));
+                if ($(this).attr("placeholder") == "Option 1") {
+                    return "option" + (examsList.children(".form-group").length + 1);
+                } else if ($(this).attr("placeholder") == "Value 1") {
+                    return "value" + (examsList.children(".form-group").length + 1);
+                }
+            });
+
+            clone
+                .find(".SelectedOptionMultiple")
+                .val("")
+                .attr("id", function() {
+                    return (
+                        $(this).attr("id") +
+                        "_" +
+                        (examsList.children(".form-group").length + 1)
+                    );
+                });
+            return examsList.append(clone);
+        });
+
+        //remove rows when remove button is clicked
+        $(document).on("click", ".js-remove-option", function(e) {
+            e.preventDefault();
+            return $(this)
+                .parent()
+                .remove();
+        });
+    }.call(this));
+
+    //Add Select
+    (function() {
+        //add rows when add button is clicked
+        $(document).on("click", ".js-add-select", function(e) {
+            var clone, examsList;
+            e.preventDefault();
+            examsList = $("#newselectoption");
+            clone = examsList.children(".form-group:first").clone(true);
+            clone.append(
+                $("<button>")
+                .addClass("btn btn-danger js-remove-select")
+                .html("Remove")
+            );
+            //reset values in cloned inputs and
+            //add enumerated ID's to input fields
+            clone
+                .find("input")
+                .val("")
+                .attr("name", function() {
+                    return (
+                        $(this).attr("name") +
+                        "_" +
+                        (examsList.children(".form-group").length + 1)
+                    );
+                });
+            return examsList.append(clone);
+        });
+
+        //remove rows when remove button is clicked
+        $(document).on("click", ".js-remove-select", function(e) {
+            e.preventDefault();
+            return $(this)
+                .parent()
+                .remove();
+        });
+    }.call(this));
+
+    //Add Another Attachment
+    (function() {
+        //add rows when add button is clicked
+        $(document).on("click", ".js-add-attachement1", function(e) {
+            var clone, examsList;
+            console.log("file another attachment is clicked");
+            e.preventDefault();
+            examsList = $("#fileinput");
+            // console.log(examsList)
+
+            // add_into = examsList.children('.form-group:first')
+            clone = examsList.children(".form-group:first").clone(true);
+
+            // console.log(clone)
+            clone.append(
+                $("<button>")
+                .addClass("btn btn-danger js-remove-select")
+                .html("Remove")
+            );
+
+            // console.log(clone)
+            //reset values in cloned inputs and
+            //add enumerated ID's to input fields
+            clone
+                .find("input")
+                .val("")
+                .attr("name", function() {
+                    return (
+                        $(this).attr("name") +
+                        "_" +
+                        (examsList.children(".form-group").length + 1)
+                    );
+                });
+            return examsList.append(clone);
+        });
+
+        //remove rows when remove button is clicked
+        $(document).on("click", ".js-remove-select", function(e) {
+            e.preventDefault();
+            return $(this)
+                .parent()
+                .remove();
+        });
+    }.call(this));
+
+    //Add url attachment
+
+    (function() {
+        //add rows when add button is clicked
+        $(document).on("click", ".js-add-attachement2", function(e) {
+            console.log("url filed attachement");
+            var clone, examsList;
+            console.log("file another attachment is clicked");
+            e.preventDefault();
+            examsList = $("#urlinput");
+            console.log(examsList);
+
+            add_into = examsList.children(".form-group:first");
+            clone = examsList.children(".form-group:first").clone(true);
+
+            console.log(clone);
+            clone.append(
+                $("<button>")
+                .addClass("btn btn-danger js-remove-select")
+                .html("Remove")
+            );
+
+            console.log(clone);
+            //reset values in cloned inputs and
+            //add enumerated ID's to input fields
+            clone
+                .find("input")
+                .val("")
+                .attr("name", function() {
+                    return (
+                        $(this).attr("name") +
+                        "_" +
+                        (examsList.children(".form-group").length + 1)
+                    );
+                });
+            return examsList.append(clone);
+        });
+
+        //remove rows when remove button is clicked
+        $(document).on("click", ".js-remove-select", function(e) {
+            e.preventDefault();
+            return $(this)
+                .parent()
+                .remove();
+        });
+    }.call(this));
+
+    //Attachment Tabs
+    $(function() {
+        $(".attachmentFile a").click(function() {
+            // Check for active
+            $(".attachmentFile li").removeClass("active");
+            $(this)
+                .parent()
+                .addClass("active");
+
+            // Display active tab
+            let currentTab = $(this).attr("href");
+            $(".attachemnt-content section").hide();
+            $(currentTab).show();
+
+            return false;
+        });
+    });
+
+    function change(id, somid) {
+        // alert(id);
+        // var divv = 'SelectedOptionMultiple'.concat((id).slice(4,10));
+        // alert(somid);
+        var divv = document.getElementById(somid);
+        var select = document.getElementById(id);
+
+        // var divv = document.getElementById("SelectedOptionMultiple");
+        // var divv = document.getElementById(somid);
+        var value = select.value;
+        if (value == 1) {
+            toAppend = `<label for='indentexternal'>Intent ID / External Url</label><input class='effect form-control' name='action${id}' value="NoAction" type='text' placeholder='Enter Text Message' disabled style='cursor: not-allowed;'>
+            <input type="hidden" name="action${id}" value="NoAction" />
+            <span class='focus-border'></span>`;
+            divv.innerHTML = toAppend;
+            return;
+        }
+        if (value == 2) {
+            toAppend = `<label for='indentexternal'>Intent ID / External Url</label><input class='effect form-control' name='action${id}' type='text' placeholder='Enter Redirect URL'><span class='focus-border'></span>`;
+            divv.innerHTML = toAppend;
+            return;
+        }
+        if (value == 3) {
+            toAppend = `<label for='indentexternal'>Intent ID / External Url</label><select name='action${id}'><option value='0'>Select Intent</option>{% for intent in intents %}<option value='{{intent.id}}'>{{intent.intent_name}}</option>{% endfor %}</select>`;
+            divv.innerHTML = toAppend;
+            return;
+        }
+        if (value == 4) {
+            toAppend = `<label for='indentexternal'>Intent ID / External Url</label><input class='effect form-control' name='action${id}' type='text' placeholder='Enter Text Message'><span class='focus-border'></span>`;
+            divv.innerHTML = toAppend;
+            return;
+        }
+        if (value == 5) {
+            toAppend = `<label for='indentexternal'>Intent ID / External Url</label><input class='effect form-control' name='action${id}' type='text' placeholder='Enter Text Message' disabled style='cursor: not-allowed;'><span class='focus-border'></span>
+            <input type="hidden" name='action${id}' value="redirection" />`;
+            divv.innerHTML = toAppend;
+            return;
+        }
+        if (value == 6) {
+            toAppend = `<label for='indentexternal'>Intent ID / External Url</label><input class='effect form-control' name='action${id}' type='text' placeholder='Enter Text Message'><span class='focus-border'></span>`;
+            divv.innerHTML = toAppend;
+            return;
+        }
+        if (value == 7) {
+            toAppend = `<label for='indentexternal'>Intent ID / External Url</label><select name='action${id}'><option value='0'>Select Group</option>{% for group in groups %}<option value='{{group.id}}'>{{group.group_name}}</option>{% endfor %}<option value='2'>new</option></select>`;
+            divv.innerHTML = toAppend;
+            return;
+        }
+    }
+
+    function changeratingacttion() {
+        var select = document.getElementById("slctrating1");
+        var divv = document.getElementById("RatingSelected1");
+        var value = select.value;
+        if (value == 1) {
+            toAppend =
+                "<label for='indentexternal'>Enter text / Search Intent</label><input class='effect form-control' type='text' placeholder='Enter Text Message' disabled style='cursor: not-allowed;'><span class='focus-border'></span>";
+            divv.innerHTML = toAppend;
+            return;
+        }
+        if (value == 2) {
+            toAppend =
+                "<label for='indentexternal'>Enter text / Search Intent</label><input class='effect form-control' type='text' placeholder='Enter Text Message'><span class='focus-border'></span>";
+            divv.innerHTML = toAppend;
+            return;
+        }
+        if (value == 3) {
+            toAppend =
+                "<label for='indentexternal'>Enter text / Search Intent</label><select><option value='0'>Select Intent</option><option value='1'>Welcome</option><option value='2'>new</option></select>";
+            divv.innerHTML = toAppend;
+            return;
+        }
+        if (value == 4) {
+            toAppend =
+                "<label for='indentexternal'>Enter text / Search Intent</label><input class='effect form-control' type='text' placeholder='Enter Text Message'><span class='focus-border'></span>";
+            divv.innerHTML = toAppend;
+            return;
+        }
+        if (value == 5) {
+            toAppend =
+                "<label for='indentexternal'>Enter text / Search Intent</label><input class='effect form-control' type='text' placeholder='Enter Text Message' disabled style='cursor:not-allowed;'><span class='focus-border'></span>";
+            divv.innerHTML = toAppend;
+            return;
+        }
+        if (value == 6) {
+            toAppend =
+                "<label for='indentexternal'>Enter text / Search Intent</label><select><option value='0'>Select Group</option><option value='1'>Welcome</option><option value='2'>new</option></select>";
+            divv.innerHTML = toAppend;
+            return;
+        }
+    }
+
+    function changeratingaction() {
+        var select = document.getElementById("slctrating2");
+        var divv = document.getElementById("RatingSelected2");
+        var value = select.value;
+        if (value == 1) {
+            toAppend =
+                "<label for='indentexternal'>Enter text / Search Intent</label><input class='effect form-control' type='text' placeholder='Enter Text Message' disabled style='cursor: not-allowed;'><span class='focus-border'></span>";
+            divv.innerHTML = toAppend;
+            return;
+        }
+        if (value == 2) {
+            toAppend =
+                "<label for='indentexternal'>Enter text / Search Intent</label><input class='effect form-control' type='text' placeholder='Enter Text Message'><span class='focus-border'></span>";
+            divv.innerHTML = toAppend;
+            return;
+        }
+        if (value == 3) {
+            toAppend =
+                "<label for='indentexternal'>Enter text / Search Intent</label><select><option value='0'>Select Intent</option><option value='1'>Welcome</option><option value='2'>new</option></select>";
+            divv.innerHTML = toAppend;
+            return;
+        }
+        if (value == 4) {
+            toAppend =
+                "<label for='indentexternal'>Enter text / Search Intent</label><input class='effect form-control' type='text' placeholder='Enter Text Message'><span class='focus-border'></span>";
+            divv.innerHTML = toAppend;
+            return;
+        }
+        if (value == 5) {
+            toAppend =
+                "<label for='indentexternal'>Enter text / Search Intent</label><input class='effect form-control' type='text' placeholder='Enter Text Message' disabled style='cursor:not-allowed;'><span class='focus-border'></span>";
+            divv.innerHTML = toAppend;
+            return;
+        }
+        if (value == 6) {
+            toAppend =
+                "<label for='indentexternal'>Enter text / Search Intent</label><select><option value='0'>Select Group</option><option value='1'>Welcome</option><option value='2'>new</option></select>";
+            divv.innerHTML = toAppend;
+            return;
+        }
+    }
+
+    function changeratingaction1() {
+        var select = document.getElementById("slctrating3");
+        var divv = document.getElementById("RatingSelected3");
+        var value = select.value;
+        if (value == 1) {
+            toAppend =
+                "<label for='indentexternal'>Enter text / Search Intent</label><input class='effect form-control' type='text' placeholder='Enter Text Message' disabled style='cursor: not-allowed;'><span class='focus-border'></span>";
+            divv.innerHTML = toAppend;
+            return;
+        }
+        if (value == 2) {
+            toAppend =
+                "<label for='indentexternal'>Enter text / Search Intent</label><input class='effect form-control' type='text' placeholder='Enter Text Message'><span class='focus-border'></span>";
+            divv.innerHTML = toAppend;
+            return;
+        }
+        if (value == 3) {
+            toAppend =
+                "<label for='indentexternal'>Enter text / Search Intent</label><select><option value='0'>Select Intent</option><option value='1'>Welcome</option><option value='2'>new</option></select>";
+            divv.innerHTML = toAppend;
+            return;
+        }
+        if (value == 4) {
+            toAppend =
+                "<label for='indentexternal'>Enter text / Search Intent</label><input class='effect form-control' type='text' placeholder='Enter Text Message'><span class='focus-border'></span>";
+            divv.innerHTML = toAppend;
+            return;
+        }
+        if (value == 5) {
+            toAppend =
+                "<label for='indentexternal'>Enter text / Search Intent</label><input class='effect form-control' type='text' placeholder='Enter Text Message' disabled style='cursor:not-allowed;'><span class='focus-border'></span>";
+            divv.innerHTML = toAppend;
+            return;
+        }
+        if (value == 6) {
+            toAppend =
+                "<label for='indentexternal'>Enter text / Search Intent</label><select><option value='0'>Select Group</option><option value='1'>Welcome</option><option value='2'>new</option></select>";
+            divv.innerHTML = toAppend;
+            return;
+        }
+    }
+
+    function changeratingaction2() {
+        var select = document.getElementById("slctrating4");
+        var divv = document.getElementById("RatingSelected4");
+        var value = select.value;
+        if (value == 1) {
+            toAppend =
+                "<label for='indentexternal'>Enter text / Search Intent</label><input class='effect form-control' type='text' placeholder='Enter Text Message' disabled style='cursor: not-allowed;'><span class='focus-border'></span>";
+            divv.innerHTML = toAppend;
+            return;
+        }
+        if (value == 2) {
+            toAppend =
+                "<label for='indentexternal'>Enter text / Search Intent</label><input class='effect form-control' type='text' placeholder='Enter Text Message'><span class='focus-border'></span>";
+            divv.innerHTML = toAppend;
+            return;
+        }
+        if (value == 3) {
+            toAppend =
+                "<label for='indentexternal'>Enter text / Search Intent</label><select><option value='0'>Select Intent</option><option value='1'>Welcome</option><option value='2'>new</option></select>";
+            divv.innerHTML = toAppend;
+            return;
+        }
+        if (value == 4) {
+            toAppend =
+                "<label for='indentexternal'>Enter text / Search Intent</label><input class='effect form-control' type='text' placeholder='Enter Text Message'><span class='focus-border'></span>";
+            divv.innerHTML = toAppend;
+            return;
+        }
+        if (value == 5) {
+            toAppend =
+                "<label for='indentexternal'>Enter text / Search Intent</label><input class='effect form-control' type='text' placeholder='Enter Text Message' disabled style='cursor:not-allowed;'><span class='focus-border'></span>";
+            divv.innerHTML = toAppend;
+            return;
+        }
+        if (value == 6) {
+            toAppend =
+                "<label for='indentexternal'>Enter text / Search Intent</label><select><option value='0'>Select Group</option><option value='1'>Welcome</option><option value='2'>new</option></select>";
+            divv.innerHTML = toAppend;
+            return;
+        }
+    }
+
+    function changeratingaction3() {
+        var select = document.getElementById("slctrating5");
+        var divv = document.getElementById("RatingSelected5");
+        var value = select.value;
+        if (value == 1) {
+            toAppend =
+                "<label for='indentexternal'>Enter text / Search Intent</label><input class='effect form-control' type='text' placeholder='Enter Text Message' disabled style='cursor: not-allowed;'><span class='focus-border'></span>";
+            divv.innerHTML = toAppend;
+            return;
+        }
+        if (value == 2) {
+            toAppend =
+                "<label for='indentexternal'>Enter text / Search Intent</label><input class='effect form-control' type='text' placeholder='Enter Text Message'><span class='focus-border'></span>";
+            divv.innerHTML = toAppend;
+            return;
+        }
+        if (value == 3) {
+            toAppend =
+                "<label for='indentexternal'>Enter text / Search Intent</label><select><option value='0'>Select Intent</option><option value='1'>Welcome</option><option value='2'>new</option></select>";
+            divv.innerHTML = toAppend;
+            return;
+        }
+        if (value == 4) {
+            toAppend =
+                "<label for='indentexternal'>Enter text / Search Intent</label><input class='effect form-control' type='text' placeholder='Enter Text Message'><span class='focus-border'></span>";
+            divv.innerHTML = toAppend;
+            return;
+        }
+        if (value == 5) {
+            toAppend =
+                "<label for='indentexternal'>Enter text / Search Intent</label><input class='effect form-control' type='text' placeholder='Enter Text Message' disabled style='cursor:not-allowed;'><span class='focus-border'></span>";
+            divv.innerHTML = toAppend;
+            return;
+        }
+        if (value == 6) {
+            toAppend =
+                "<label for='indentexternal'>Enter text / Search Intent</label><select><option value='0'>Select Group</option><option value='1'>Welcome</option><option value='2'>new</option></select>";
+            divv.innerHTML = toAppend;
+            return;
+        }
+    }
+</script>
+
+{% endblock %}

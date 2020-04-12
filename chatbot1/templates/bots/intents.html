@@ -1,0 +1,80 @@
+{% extends 'bots/navigation.html' %}{% block bots %}
+
+<div class="container-fluid">
+    <div class="row mx-auto justify-content-center">
+        <div class="col-md-6 col-12">
+            <div class="row mx-auto justify-content-center d-inline-flex w-100 h-100">
+                <div class="col-md-7 col-12 my-3">
+                    <div class="row">
+                        <form action="" class="search-bar">
+                            <input type="search" name="search" pattern=".*\S.*" id="search" required placeholder="Search">
+                        </form>
+                    </div>
+                </div>
+                <div class="col-md-5 col-12 my-3">
+                    <div class="row">
+                        <a href="/bot-console/intent-form/"> <button class="CreateButtons"><span>Create New Intent</span></button> </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row w-100 h-100 mx-auto">
+        {% if public_intents %} {% for intent in public_intents %}
+        <div class="col-md-3 d-inline-flex">
+            <div class="BotIntentsBox d-inline-flex w-100">
+                <div class="BotIntentTitle">
+                    <span>{{intent.intent_name}}</span>
+                </div>
+                <div class="BotIntentIcon">
+                    <span class="tool" data-tip="Edit" tabindex="1"><i class="fa fa-pencil"></i></span>
+                    <span class="tool" data-tip="Delete" tabindex="1" style="color: red;"><i class="fa fa-trash-o"></i></span>
+                </div>
+            </div>
+        </div>
+        {% endfor %} {% endif %} {% if private_intents %} {% for intent in private_intents %}
+        <div class="col-md-3 d-inline-flex">
+            <div class="BotIntentsBox d-inline-flex w-100">
+                <div class="BotIntentTitle">
+                    <span>{{intent.intent_name}}</span>
+                </div>
+                <div class="BotIntentIcon">
+                    <form method="POST" action="/edit/edit_intent/" style="display: inline;">
+                        {% csrf_token %}
+                        <input type="hidden" value="false" name="edited" />
+                        <input type="hidden" value="{{intent.id}}" name="intent_id" />
+                        <button style="background:none;border:none;outline:none;" type="submit"><span class="tool" data-tip="Edit" tabindex="1" type="submit"><i class="fa fa-pencil"></i></span></button>
+                    </form>
+
+                    <!-- <a href="/delete_intent/{{intent.id}}"><button class="btn d-inline float-right">
+                     <i class="fa fa-trash" aria-hidden="true"></i>
+                   </button></a> -->
+
+                    <a href="/delete_intent/{{intent.id}}"><span class="tool" data-tip="Delete" tabindex="1" style="color: red;"><i class="fa fa-trash-o"></i></span></a>
+                </div>
+            </div>
+        </div>
+        {% endfor %} {% endif %}
+    </div>
+</div>
+
+<link rel="stylesheet" type="text/css" href="/static/css/main.css">
+
+<style>
+    #intents {
+        background-color: rgba(255, 94, 20, 0.8);
+    }
+</style>
+
+<script>
+    //For Menu
+    $('.BotMainMenuTrigger').click(function() {
+        $(this).toggleClass('active');
+        console.log("Clicked menu");
+        $("#BotMainMenuListDiv").toggleClass("show_list");
+        $("#BotMainMenuListDiv").fadeIn();
+    });
+</script>
+
+{% endblock %}

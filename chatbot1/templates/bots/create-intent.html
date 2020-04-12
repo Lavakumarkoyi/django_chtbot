@@ -1,0 +1,68 @@
+{% extends 'bots/navigation.html' %}{% block create-intent %}
+<div class="clearfix">
+    <div class="sub-main" style="width:80%;float:right;margin-right:10px;">
+        <div class="button-div float-right">
+            <a href="/bot-console/intent-form/"><button class="btn btn-outline-info">Create Intent</button></a>
+        </div>
+
+        <div class="container" style="margin-top:70px;">
+            <div class="row">
+                {% if public_intents %} {% for intent in public_intents %}
+                <div class="intent float-left mr-3 mb-4 clearfix">
+                    <div class="intent-button clearfix">
+                        <form method="POST" action="/edit/edit_intent/" style="display:inline">
+                            {% csrf_token %}
+                            <input type="hidden" value="false" name="edited" />
+                            <input type="hidden" value="{{intent.id}}" name="intent_id" />
+                            <button class="btn d-inline float-right" type="submit">
+                <i class="fa fa-edit" aria-hidden="true"></i>
+              </button>
+                        </form>
+
+                        <a href="/delete_intent/{{intent.id}}"><button class="btn d-inline float-right">
+                <i class="fa fa-trash" aria-hidden="true"></i>
+              </button></a>
+                    </div>
+                    <div class="intent-name text-center">
+                        <p>{{intent.intent_name}}</p>
+                    </div>
+                </div>
+                {% endfor %} {% endif %} {% if private_intents %} {% for intent in private_intents %}
+                <div class="intent float-left mr-3 clearfix mb-4">
+                    <div class="intent-button clearfix">
+                        <form method="POST" action="/edit/edit_intent/" style="display:inline">
+                            {% csrf_token %}
+                            <input type="hidden" value="false" name="edited" />
+                            <input type="hidden" value="{{intent.id}}" name="intent_id" />
+                            <button class="btn d-inline float-right" type="submit">
+                <i class="fa fa-edit" aria-hidden="true"></i>
+              </button>
+                        </form>
+
+                        <a href="/delete_intent/{{intent.id}}"><button class="btn d-inline float-right">
+                <i class="fa fa-trash" aria-hidden="true"></i>
+              </button></a>
+                    </div>
+                    <div class="intent-name text-center">
+                        <p>{{intent.intent_name}}</p>
+                    </div>
+                </div>
+                {% endfor %} {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <link href="/static/css/create-bot.css" rel="stylesheet" />
+
+
+    <style>
+        .intent {
+            width: 250px;
+            border: 1px solid black;
+            box-shadow: 0 5px 10px black;
+        }
+    </style>
+
+
+    {% endblock %}
+</div>

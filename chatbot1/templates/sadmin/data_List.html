@@ -1,0 +1,98 @@
+{% extends 'bots/navigation.html' %} {% block Manageusers %}
+
+<div class="tabel-header">
+    <div class="container w-75 root-table">
+        <div clas="row">
+            <table class="table">
+                <thead class="thead">
+                    <tr>
+                        <th>Username</th>
+                        <th>Email</th>
+                        <th>number of bots</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                {% if users %}
+                <tbody>
+                    {% for user in users %} {% if user.is_staff is False %}
+                    <tr>
+                        <td>{{user.username}}</td>
+                        <td>{{user.email}}</td>
+                        <td>{{user.id}}</td>
+                        <td>
+                            <form style="display: inline;" method="POST" action="/user-id/inactive-user">
+                                {% csrf_token %}
+                                <input type="hidden" value="{{user.id}}" name="user_id" /> {% if user.is_active %}
+                                <input type="hidden" value="active" name="activity" />
+                                <button class="btn btn-sm btn-primary" type="submit">Inactive</button> {% else %}
+                                <input type="hidden" value="inactive" name="activity" />
+                                <button class="btn btn-sm btn-primary" type="submit">active</button> {% endif %}
+                            </form>
+                        </td>
+                        <td>
+                            <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#m{{user.id}}">Delete</button>
+                            <div class="modal fade" id="m{{user.id}}" tabindex="-1" role="dialog">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">Modal title</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <h6>On deleting all the Bots,groups and intents of this user are deleted and not accessible.Please transfer those to another user</h6><br />
+                                            <form style="display: inline;" method="POST" action="/user-id/delete-user">
+                                                {% csrf_token %}
+                                                <select class="form-control font-weight-bold" name="user_transfer">
+                                                    {% for transfer in users %}
+                                                    {% if transfer.username != user.username %}
+                                                    {% if transfer.is_staff is False %}
+                                                    <option value="{{transfer.id}}" class="font-weight-bold">
+                                                        {{transfer.username}}
+                                                    </option>
+                                                    {% endif %}
+                                                    {% endif %}
+                                                    {% endfor %}
+                                                </select>
+                                                <br />
+                                                <br />
+                                                <input type="hidden" value="{{user.id}}" name="user_id" />
+                                                <button type="submit" class="btn btn-primary">Save changes</button>
+                                            </form>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </td>
+                    </tr>
+                    {% endif %} {% endfor %}
+                </tbody>
+                {% endif %}
+            </table>
+        </div>
+    </div>
+</div>
+
+<link href="/static/css/create-bot.css" rel="stylesheet" />
+
+
+<style>
+    .table-header {
+        position: relative;
+    }
+    
+    .root-table {
+        position: absolute;
+        left: 20%;
+    }
+</style>
+
+<script>
+</script>
+{% endblock %}

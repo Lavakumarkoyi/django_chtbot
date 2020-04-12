@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
+</head>
+
+<body>
+    <div class="container mt-5">
+        <div class="row">
+            <h5></h5>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>client Name</th>
+                        <th>client_logo</th>
+                        <th>clientAdded</th>
+                        <th>status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{{client_details.client_name}}</td>
+                        <td>{{client_details.client_logo}}</td>
+                        <td>{{client_details.client_added}}</td>
+                        <button><td>{{client_details.is_active}}</td></button>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="row">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>SubscriptionName</th>
+                        <th>bots</th>
+                        <th>groups</th>
+                        <th>intents</th>
+                        <th>subAccounts</th>
+                        <th>Interactions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{{subscription_details.subscription_name}}</td>
+                        <td>{{subscription_details.number_of_bots}}</td>
+                        <td>{{subscription_details.number_of_groups}}</td>
+                        <td>{{subscription_details.number_of_intents}}</td>
+                        <td>{{subscription_details.number_of_subAccounts}}</td>
+                        <td>{{subscription_details.number_of_interaction}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="row">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Spoc Name</th>
+                        <th>Spoc email</th>
+                        <th>Spoc address</th>
+                        <th>status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{{spoc_details.spoc_name}}</td>
+                        <td>{{spoc_details.spoc_email}}</td>
+                        <td>{{spoc_details.spoc_phone}}</td>
+                        <button><td>{{client_details.is_active}}</td></button>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</body>
+
+</html>

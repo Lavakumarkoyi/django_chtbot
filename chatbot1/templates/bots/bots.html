@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <title>Login</title>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+   <link rel="icon" type="image/png" href="img/stratemis-icon.png"/>
+   <link rel="stylesheet" type="text/css" href="css/main.css">
+   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.0/css/bootstrap.min.css">
+   <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.0/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+   <div class="container-fluid">
+      <div class="col-md-12">
+         <div class="row">
+            <div class="col-md-2 mt-2 mb-1 col-12">
+               <div class="row justify-content-center" id="LogoImage">
+                  <img src="img/logo.png">
+               </div>
+            </div>
+            <div class="col-md-10 my-4 col-12">
+               <div class="float-right UserLogout">
+                  <p>Welcome <span>Stratemis HR</span></p>
+                  <p><b>&nbsp;&nbsp;|&nbsp;&nbsp;</b></p>
+                  <a href="index.html">Log out&nbsp;&nbsp;<i class="fa fa-sign-out"></i></a>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+   <div class="container-fluid">
+      <div class="row">
+         <div class="col-md-12" id="MainMenu">
+            <nav class="BotMainMenu">
+               <div id="BotMainMenuListDiv" class="BotMainMenuList">
+                  <ul class="BotMainMenulinks">
+                      <li><a href="bots.html"><i class="fa fa-tachometer"></i> Bots</a></li>
+                      <li><a href="intents.html"><i class="fa fa-pencil-square-o"></i> Intents</a></li>
+                      <li><a href="groups.html"><i class="fa fa-object-group"></i> Groups</a></li>
+                      <li><a href="manage-users.html"><i class="fa fa-users"></i> Manage Users</a></li>
+                  </ul>
+               </div>
+               <span class="BotMainMenuTrigger">
+                  <i></i>
+                  <i></i>
+                  <i></i>
+               </span>
+            </nav>
+         </div>
+      </div>
+   </div>
+
+   <div class="container-fluid">
+      <div class="row mx-auto justify-content-center">
+         <div class="col-md-6 col-12">
+            <div class="row mx-auto justify-content-center d-inline-flex w-100 h-100">
+               <div class="col-md-7 col-12 my-3">
+                  <div class="row">
+                     <form action="" class="search-bar">
+                        <input type="search" name="search" pattern=".*\S.*" id="search" required placeholder="Search">
+                     </form>
+                  </div>
+               </div>
+               <div class="col-md-5 col-12 my-3">
+                  <div class="row">
+                     <button class="CreateButtons"><span>Create New Bot</span></button>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+
+      <div class="row w-100 h-100 mx-auto" style="overflow: hidden">
+         <div class="col-md-3 my-3">
+            <div class="BotWrapper">
+               <div class="BotCard">
+                  <div class="float-left">
+                     <h4 class="card-title widget-botheading">Stratemis</h4>
+                     <h6 class="card-subtitle text-muted small">Virus</h6>
+                  </div>
+                  <div class="float-right BoT_client_logo">
+                     <img src="img/stratemis-icon.png" alt="Bot's logo">
+                  </div>
+                  <div class="clearfix"></div>
+                  <hr class="hr_line">
+                  <div class="float-left BoTDate">
+                     <p>Created Date</p>
+                     <h6 class="card-subtitle text-muted small">16 Mar 2020</h6>
+                  </div>
+                  <div class="float-right BoTDate">
+                     <p style="text-align:right">Last Updated</p>
+                     <h6 class="card-subtitle text-muted small">16 Mar 2020</h6>
+                  </div>
+                  <div class="clearfix"></div>
+                  <hr class="hr_line">
+                  <div class="Edit_bot_btn">
+                     <button class="ButtonEffects"><span>Edit Bot <i class="fa fa-pencil"></i></span></button>
+                  </div>
+                  <div class="Edit_bot_btn Bot_analytics">
+                     <button class="ButtonEffects"><span>Bot Analytics <i class="fa fa-line-chart"></i></span></button>
+                  </div>
+                  <div class="clearfix"></div>
+                  <hr class="hr_line">
+                  <div class="HiddenIcons">
+                     <div class="float-left">
+                        <a href="#" id="EnableBot" onclick=""><i class="fa fa-pause"></i> Enabled</a>
+                        <a href="#" style="display: none;" id="DisableBot"><i class="fa fa-play"></i> Disabled</a>
+                     </div>
+                     <div class="float-right">
+                        <a href="#"><span class="tool" data-tip="Preview Bot" tabindex="1"><i class="fa fa-eye"></i></span></a>                        
+                        <!-- <a href="#"><span class="tool" data-tip="Share Bot" tabindex="1"><i class="fa fa-share-alt"></i></span></a> -->
+                        <a href="#"><span class="tool" data-tip="Settings" tabindex="1"><i class=" fa fa-gear"></i></span></a>
+                        <a href="#" style="color: red;"><span class="tool" data-tip="Delete" tabindex="1"><i class="fa fa-trash-o"></i></span></a>
+                        <div class="clearfix"></div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+
+         <div class="col-md-3 my-3">
+            <div class="BotWrapper">
+               <div class="BotCard">
+                  <div class="float-left">
+                     <h4 class="card-title widget-botheading">Stratemis</h4>
+                     <h6 class="card-subtitle text-muted small">Virus</h6>
+                  </div>
+                  <div class="float-right BoT_client_logo">
+                     <img src="img/stratemis-icon.png" alt="Bot's logo">
+                  </div>
+                  <div class="clearfix"></div>
+                  <hr class="hr_line">
+                  <div class="float-left BoTDate">
+                     <p>Created Date</p>
+                     <h6 class="card-subtitle text-muted small">16 Mar 2020</h6>
+                  </div>
+                  <div class="float-right BoTDate">
+                     <p style="text-align:right">Last Updated</p>
+                     <h6 class="card-subtitle text-muted small">16 Mar 2020</h6>
+                  </div>
+                  <div class="clearfix"></div>
+                  <hr class="hr_line">
+                  <div class="Edit_bot_btn">
+                     <button class="ButtonEffects"><span>Edit Bot <i class="fa fa-pencil"></i></span></button>
+                  </div>
+                  <div class="Edit_bot_btn Bot_analytics">
+                     <button class="ButtonEffects"><span>Bot Analytics <i class="fa fa-line-chart"></i></span></button>
+                  </div>
+                  <div class="clearfix"></div>
+                  <hr class="hr_line">
+                  <div class="HiddenIcons">
+                     <div class="float-left">
+                        <a href="#" id="EnableBot" onclick=""><i class="fa fa-pause"></i> Enabled</a>
+                        <a href="#" style="display: none;" id="DisableBot"><i class="fa fa-play"></i> Disabled</a>
+                     </div>
+                     <div class="float-right">
+                        <a href="#"><span class="tool" data-tip="Preview Bot" tabindex="1"><i class="fa fa-eye"></i></span></a>                        
+                        <!-- <a href="#"><span class="tool" data-tip="Share Bot" tabindex="1"><i class="fa fa-share-alt"></i></span></a> -->
+                        <a href="#"><span class="tool" data-tip="Settings" tabindex="1"><i class=" fa fa-gear"></i></span></a>
+                        <a href="#" style="color: red;"><span class="tool" data-tip="Delete" tabindex="1"><i class="fa fa-trash-o"></i></span></a>
+                        <div class="clearfix"></div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+
+         <div class="col-md-3 my-3">
+            <div class="BotWrapper">
+               <div class="BotCard">
+                  <div class="float-left">
+                     <h4 class="card-title widget-botheading">Stratemis</h4>
+                     <h6 class="card-subtitle text-muted small">Virus</h6>
+                  </div>
+                  <div class="float-right BoT_client_logo">
+                     <img src="img/stratemis-icon.png" alt="Bot's logo">
+                  </div>
+                  <div class="clearfix"></div>
+                  <hr class="hr_line">
+                  <div class="float-left BoTDate">
+                     <p>Created Date</p>
+                     <h6 class="card-subtitle text-muted small">16 Mar 2020</h6>
+                  </div>
+                  <div class="float-right BoTDate">
+                     <p style="text-align:right">Last Updated</p>
+                     <h6 class="card-subtitle text-muted small">16 Mar 2020</h6>
+                  </div>
+                  <div class="clearfix"></div>
+                  <hr class="hr_line">
+                  <div class="Edit_bot_btn">
+                     <button class="ButtonEffects"><span>Edit Bot <i class="fa fa-pencil"></i></span></button>
+                  </div>
+                  <div class="Edit_bot_btn Bot_analytics">
+                     <button class="ButtonEffects"><span>Bot Analytics <i class="fa fa-line-chart"></i></span></button>
+                  </div>
+                  <div class="clearfix"></div>
+                  <hr class="hr_line">
+                  <div class="HiddenIcons">
+                     <div class="float-left">
+                        <a href="#" id="EnableBot" onclick=""><i class="fa fa-pause"></i> Enabled</a>
+                        <a href="#" style="display: none;" id="DisableBot"><i class="fa fa-play"></i> Disabled</a>
+                     </div>
+                     <div class="float-right">
+                        <a href="#"><span class="tool" data-tip="Preview Bot" tabindex="1"><i class="fa fa-eye"></i></span></a>                        
+                        <!-- <a href="#"><span class="tool" data-tip="Share Bot" tabindex="1"><i class="fa fa-share-alt"></i></span></a> -->
+                        <a href="#"><span class="tool" data-tip="Settings" tabindex="1"><i class=" fa fa-gear"></i></span></a>
+                        <a href="#" style="color: red;"><span class="tool" data-tip="Delete" tabindex="1"><i class="fa fa-trash-o"></i></span></a>
+                        <div class="clearfix"></div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+
+         <div class="col-md-3 my-3">
+            <div class="BotWrapper">
+               <div class="BotCard">
+                  <div class="float-left">
+                     <h4 class="card-title widget-botheading">Stratemis</h4>
+                     <h6 class="card-subtitle text-muted small">Virus</h6>
+                  </div>
+                  <div class="float-right BoT_client_logo">
+                     <img src="img/stratemis-icon.png" alt="Bot's logo">
+                  </div>
+                  <div class="clearfix"></div>
+                  <hr class="hr_line">
+                  <div class="float-left BoTDate">
+                     <p>Created Date</p>
+                     <h6 class="card-subtitle text-muted small">16 Mar 2020</h6>
+                  </div>
+                  <div class="float-right BoTDate">
+                     <p style="text-align:right">Last Updated</p>
+                     <h6 class="card-subtitle text-muted small">16 Mar 2020</h6>
+                  </div>
+                  <div class="clearfix"></div>
+                  <hr class="hr_line">
+                  <div class="Edit_bot_btn">
+                     <button class="ButtonEffects"><span>Edit Bot <i class="fa fa-pencil"></i></span></button>
+                  </div>
+                  <div class="Edit_bot_btn Bot_analytics">
+                     <button class="ButtonEffects"><span>Bot Analytics <i class="fa fa-line-chart"></i></span></button>
+                  </div>
+                  <div class="clearfix"></div>
+                  <hr class="hr_line">
+                  <div class="HiddenIcons">
+                     <div class="float-left">
+                        <a href="#" id="EnableBot" onclick=""><i class="fa fa-pause"></i> Enabled</a>
+                        <a href="#" style="display: none;" id="DisableBot"><i class="fa fa-play"></i> Disabled</a>
+                     </div>
+                     <div class="float-right">
+                        <a href="#"><span class="tool" data-tip="Preview Bot" tabindex="1"><i class="fa fa-eye"></i></span></a>                        
+                        <!-- <a href="#"><span class="tool" data-tip="Share Bot" tabindex="1"><i class="fa fa-share-alt"></i></span></a> -->
+                        <a href="#"><span class="tool" data-tip="Settings" tabindex="1"><i class=" fa fa-gear"></i></span></a>
+                        <a href="#" style="color: red;"><span class="tool" data-tip="Delete" tabindex="1"><i class="fa fa-trash-o"></i></span></a>
+                        <div class="clearfix"></div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+
+         <div class="col-md-3 my-3">
+            <div class="BotWrapper">
+               <div class="BotCard">
+                  <div class="float-left">
+                     <h4 class="card-title widget-botheading">Stratemis</h4>
+                     <h6 class="card-subtitle text-muted small">Virus</h6>
+                  </div>
+                  <div class="float-right BoT_client_logo">
+                     <img src="img/stratemis-icon.png" alt="Bot's logo">
+                  </div>
+                  <div class="clearfix"></div>
+                  <hr class="hr_line">
+                  <div class="float-left BoTDate">
+                     <p>Created Date</p>
+                     <h6 class="card-subtitle text-muted small">16 Mar 2020</h6>
+                  </div>
+                  <div class="float-right BoTDate">
+                     <p style="text-align:right">Last Updated</p>
+                     <h6 class="card-subtitle text-muted small">16 Mar 2020</h6>
+                  </div>
+                  <div class="clearfix"></div>
+                  <hr class="hr_line">
+                  <div class="Edit_bot_btn">
+                     <button class="ButtonEffects"><span>Edit Bot <i class="fa fa-pencil"></i></span></button>
+                  </div>
+                  <div class="Edit_bot_btn Bot_analytics">
+                     <button class="ButtonEffects"><span>Bot Analytics <i class="fa fa-line-chart"></i></span></button>
+                  </div>
+                  <div class="clearfix"></div>
+                  <hr class="hr_line">
+                  <div class="HiddenIcons">
+                     <div class="float-left">
+                        <a href="#" id="EnableBot" onclick=""><i class="fa fa-pause"></i> Enabled</a>
+                        <a href="#" style="display: none;" id="DisableBot"><i class="fa fa-play"></i> Disabled</a>
+                     </div>
+                     <div class="float-right">
+                        <a href="#"><span class="tool" data-tip="Preview Bot" tabindex="1"><i class="fa fa-eye"></i></span></a>                        
+                        <!-- <a href="#"><span class="tool" data-tip="Share Bot" tabindex="1"><i class="fa fa-share-alt"></i></span></a> -->
+                        <a href="#"><span class="tool" data-tip="Settings" tabindex="1"><i class=" fa fa-gear"></i></span></a>
+                        <a href="#" style="color: red;"><span class="tool" data-tip="Delete" tabindex="1"><i class="fa fa-trash-o"></i></span></a>
+                        <div class="clearfix"></div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+
+         <div class="col-md-3 my-3">
+            <div class="BotWrapper">
+               <div class="BotCard">
+                  <div class="float-left">
+                     <h4 class="card-title widget-botheading">Stratemis</h4>
+                     <h6 class="card-subtitle text-muted small">Virus</h6>
+                  </div>
+                  <div class="float-right BoT_client_logo">
+                     <img src="img/stratemis-icon.png" alt="Bot's logo">
+                  </div>
+                  <div class="clearfix"></div>
+                  <hr class="hr_line">
+                  <div class="float-left BoTDate">
+                     <p>Created Date</p>
+                     <h6 class="card-subtitle text-muted small">16 Mar 2020</h6>
+                  </div>
+                  <div class="float-right BoTDate">
+                     <p style="text-align:right">Last Updated</p>
+                     <h6 class="card-subtitle text-muted small">16 Mar 2020</h6>
+                  </div>
+                  <div class="clearfix"></div>
+                  <hr class="hr_line">
+                  <div class="Edit_bot_btn">
+                     <button class="ButtonEffects"><span>Edit Bot <i class="fa fa-pencil"></i></span></button>
+                  </div>
+                  <div class="Edit_bot_btn Bot_analytics">
+                     <button class="ButtonEffects"><span>Bot Analytics <i class="fa fa-line-chart"></i></span></button>
+                  </div>
+                  <div class="clearfix"></div>
+                  <hr class="hr_line">
+                  <div class="HiddenIcons">
+                     <div class="float-left">
+                        <a href="#" id="EnableBot" onclick=""><i class="fa fa-pause"></i> Enabled</a>
+                        <a href="#" style="display: none;" id="DisableBot"><i class="fa fa-play"></i> Disabled</a>
+                     </div>
+                     <div class="float-right">
+                        <a href="#"><span class="tool" data-tip="Preview Bot" tabindex="1"><i class="fa fa-eye"></i></span></a>                        
+                        <!-- <a href="#"><span class="tool" data-tip="Share Bot" tabindex="1"><i class="fa fa-share-alt"></i></span></a> -->
+                        <a href="#"><span class="tool" data-tip="Settings" tabindex="1"><i class=" fa fa-gear"></i></span></a>
+                        <a href="#" style="color: red;"><span class="tool" data-tip="Delete" tabindex="1"><i class="fa fa-trash-o"></i></span></a>
+                        <div class="clearfix"></div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+
+      </div>
+   </div>
+
+</body>
+<script>
+  //For Menu
+  $('.BotMainMenuTrigger').click(function () {
+   $(this).toggleClass('active');
+   $("#BotMainMenuListDiv").toggleClass("show_list");
+   $("#BotMainMenuListDiv").fadeIn();
+  });
+
+   //Enable and disable Bot
+   $(function() {
+     $('#EnableBot').click(function() {
+       $("#EnableBot").hide(400);
+       $("#DisableBot").show(400);
+     });
+   });
+
+   $(function() {
+     $('#DisableBot').click(function() {
+       $("#DisableBot").hide(400);
+       $("#EnableBot").show(400);
+     });
+   });
+   //Enable and disable Bot End
+</script>

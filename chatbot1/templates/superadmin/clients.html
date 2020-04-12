@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
+
+    <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<body>
+    <div class="container mt-5">
+        <div class="row mb-5">
+            <button type="button" class="btn btn-primary mr-5" data-toggle="modal" data-target="#exampleModal">
+                AddClient
+              </button>
+
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#subscription">
+                AddSubscription
+              </button>
+
+            <!-- client_details -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header text-center">
+                            <h5 class="modal-title text-center" id="exampleModalLabel">ADD CLIENT DEATILS</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                        </div>
+                        <div class="modal-body">
+                            <form method="POST">
+                                <input type="hidden" name="formdata" value='addClient' />
+                                <div class="col form-group">
+                                    <input type="text" class="form-control" placeholder="Client Name" name="clientName">
+                                </div>
+                                <div class="col form-group">
+                                    <input type="file" class="form-control" placeholder="Client Logo" name="clientLogo">
+                                </div>
+
+                                <h2 class="text-info">SPOC DETAILS</h2>
+
+                                <div class="col form-group">
+                                    <input type="text" class="form-control" placeholder="SPOC NAME" name="spocName">
+                                </div>
+
+                                <div class="col form-group">
+                                    <input type="text" class="form-control" placeholder="SPOC NAME" name="spocEmail">
+                                </div>
+
+                                <div class="col form-group">
+                                    <input type="tel" class="form-control" pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}" name="spocPhone" placeholder="PHONE NUMBER">
+                                </div>
+
+                                <div class="col form-group">
+                                    <select name="client_susbcription" aria-placeholder="select" class="btn btn-success">
+                                        {% for subscription in subscriptions %}
+                                        <option vlaue="{{subscription.id}}">{{subscription.subscription_name}}</option>
+                                        {% endfor %}
+                                    </select>
+
+                                    <i class="fa fa-eye" aria-hidden="true" style="cursor: pointer;"></i>
+                                </div>
+
+                                <div class="col form-group">
+                                    <label>SUBSCRIPTION START DATE</label>
+                                    <input type="date" class="form-control" />
+                                </div>
+
+                                <div class="col form-group">
+                                    <button type="submit" class="btn btn-primary">Save changes</button>
+                                </div>
+
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <!-- subscription -->
+        <div class="modal fade" id="subscription" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header text-center">
+                        <h5 class="modal-title text-center" id="exampleModalLabel">ADD SUBSCRIPTIONS</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                        <form method="POST">
+                            <input type="hidden" name="formdata" value="subscription" />
+                            <div class="col form-group">
+                                <label>SUBSCRIPTION NAME</label>
+                                <input type="text" class="form-control" name="subscriptionName">
+                            </div>
+                            <div class="col form-group">
+                                <label>NUMBER OF BOTS</label>
+                                <input type="text" class="form-control" name="bots">
+                            </div>
+
+                            <div class="col form-group">
+                                <label>NUMBER OF GROUPS</label>
+                                <input type="text" class="form-control" name="groups">
+                            </div>
+
+                            <div class="col form-group">
+                                <label>NUMBER OF INTENTS</label>
+                                <input type="text" class="form-control" name="intents">
+                            </div>
+
+                            <div class="col form-group">
+                                <label>NUMBER OF SUBACCOUNTS</label>
+                                <input type="text" class="form-control" name="subaccounts">
+                            </div>
+
+                            <div class="col form-group">
+                                <label>NUMBER OF INTERACTIONS</label>
+                                <input type="text" class="form-control" name="interactions">
+                            </div>
+
+                            <div class="col form-group">
+                                <select name="billing" class="btn btn-dark">
+                                    <option value="0">Billing</option>
+                                    <option value="annual">Annual(1 year)</option>
+                                    <option value="Monthly">Monthly(1 Month)</option>
+                                    <option value="quaterly">Quaterly(3 Months)</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <textarea class="form-control" name="description" rows="5" cols="10"></textarea>
+                            </div>
+
+                            <div class="col form-group">
+                                <label>SUBSCRIPTION FEE</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend"><span class="input-group-text">
+                                    <select>
+                                        <option value="inr"><i class="fa fa-rupee-sign" aria-hidden="true"></i></option>
+                                    </select>
+                                </span></div>
+                                    <input type="number" class="form-control" name="interactions">
+                                </div>
+
+                            </div>
+
+
+                            <div class="col form-group">
+                                <button type="submit" class="btn btn-primary">Save changes</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                {% for client in clients %}
+                <form class="form" method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="formdata" value="clients" />
+                    <input type="hidden" value="{{client.id}}" name="client_id" />
+                    <button class="btn btn-lg btn-primary">
+              {{client.client_name}}
+            </button>
+                </form>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</body>
+
+</html>

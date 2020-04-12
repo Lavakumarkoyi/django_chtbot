@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
+
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+</head>
+
+<body>
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col">
+                <h1 class="text-center">Django channels chatbot</h1>
+                <hr />
+            </div>
+            <!-- <a href="/logout" style="line-height: -1.7; text-decoration: none;float:left;margin-right:5px;"><span><button class="btn btn-success">Logout</button></span></a
+        >
+        <a
+          href="/bot-console/bots"
+          style="line-height: -1.7; text-decoration: none;float:left;"
+          ><span><button class="btn btn-success">Back</button></span></a
+        > -->
+        </div>
+        <div class="row offset-1">
+            <div class="col-12">
+                <ul id="chatdata"></ul>
+            </div>
+        </div>
+        <div class="row offset-1">
+            <div class="col">
+                <form class="form formD" method="POST">
+                    {% csrf_token %}
+                    <div class="col-5 form-group">
+                        <input type="text" class="form-control msg" placeholder="send Message" />
+                    </div>
+                    <div class="col form-group">
+                        <button class="btn btn-primary me">send</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        var endpoint = "";
+        var wsstart = "ws://";
+        if (window.location.protocol == "https:") {
+            wsstart = "wss://";
+        }
+        endpoint =
+            wsstart +
+            window.location.hostname +
+            ":" +
+            window.location.port +
+            "/chat/{{username}}/{{bot_id}}";
+
+        var socket = new WebSocket(endpoint);
+
+        var count = 0;
+
+        socket.onmessage = function(e) {
+            var chatdata = JSON.parse(e.data);
+
+            console.log(chatdata);
+
+            document.querySelector(".me").disabled = false;
+            document.querySelector(".msg").disabled = false;
+
+            // if(chatdata.type == 'rpy'){
+
+            // }
+
+            if (chatdata.type == "goodbye") {
+                $("#chatdata").append(
+                    `<li class="mb-4" style="list-style:none">${chatdata.msg}</li>`
+                );
+
+                document.querySelector(".me").disabled = true;
+                document.querySelector(".msg").disabled = true;
+            } else {
+                if (chatdata.msg.response_type == "text") {
+                    $("#chatdata").append(
+                        `<li  class="mb-4" style="list-style:none">${chatdata.msg.responses[0]}</li>`
+                    );
+                } else if (chatdata.msg.response_type == "attachment") {
+                    responses = chatdata.msg.responses;
+                    for (let i = 0; i < responses.length; i++) {
+                        $("#chatdata").append(
+                            `<li style="list-style:none">${responses[i]["title"]}</li>`
+                        );
+
+                        $("#chatdata").append(
+                            `<li  class="mb-4" style="list-style:none"><img src="/media/${responses[i]["image"]}" width="200px" height="200px" alt="imagenot found"/></li>`
+                        );
+                    }
+
+                    socket.send("image read");
+                } else if (chatdata.msg.response_type == "multichoice") {
+                    document.querySelector(".me").disabled = true;
+                    document.querySelector(".msg").disabled = true;
+                    titles = chatdata.msg.responses[0]["responseText"];
+
+                    $("#chatdata").append(`<li style="list-style:none">${titles}</li>`);
+                    for (let i = 1; i < chatdata.msg.responses.length; i++) {
+                        $("#chatdata").append(
+                            `<li class="btn-b"  class="mb-4" style="list-style:none"><button class="btn btn-block btn-primary" value="${chatdata.msg.responses[i]["option"]}">${chatdata.msg.responses[i]["option"]}</button></li>`
+                        );
+                    }
+                }
+            }
+        };
+
+        socket.onopen = function(e) {
+            socket.send("opened");
+
+            document.querySelector("#chatdata").addEventListener("click", e => {
+                if (e.target.classList.contains("btn-block")) {
+                    console.log(e.target.textContent);
+                    redirection_value = e.target.textContent;
+                    console.log(document.querySelector("#chatdata"));
+
+                    c_child = document.querySelector("#chatdata").childNodes;
+
+                    total_btn = document.querySelectorAll(".btn-b");
+
+                    console.log(total_btn);
+
+                    for (let k = 0; k < total_btn.length; k++) {
+                        console.log(total_btn[k]);
+                        document.querySelector("#chatdata").removeChild(total_btn[k]);
+                    }
+
+                    console.log(total_btn);
+
+                    // for (let i = 0; i < c_child.length; i++) {
+                    //     if (c_child[i].classList.contains("bnt-b")) {
+                    //         //console.log(c_child[i]);
+                    //         console.log(child);
+                    //     }
+                    // }
+
+                    $("#chatdata")
+                        .append(`<li style="list-style:none;" class="float-right">
+                    <button class="btn btn-primary btn-small">${redirection_value}</button>
+                    </li>`);
+
+                    console.log(redirection_value);
+
+                    socket.send(redirection_value);
+                }
+            });
+
+            //console.log('onopen', e)
+
+            document.querySelector(".formD").addEventListener("submit", e => {
+                e.preventDefault();
+                msg = document.querySelector(".msg").value;
+                socket.send(msg);
+                $("#chatdata").append(`<li>${msg}</li>`);
+                document.querySelector(".msg").value = "";
+            });
+        };
+
+        socket.onerror = function(e) {
+            //console.log('onerror', e)
+        };
+
+        socket.onclose = function(e) {
+            console.log("onclose", e);
+        };
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</body>
+
+</html>

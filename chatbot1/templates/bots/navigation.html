@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Login</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/png" href="static/images/stratemis-icon.png" />
+    <!-- <link rel="stylesheet" type="text/css" href="css/main.css"> -->
+    <link rel="stylesheet" type="text/css" href="/static/css/main.css">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.0/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+    <div class="container-fluid">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-2 mt-2 mb-1 col-12">
+                    <div class="row justify-content-center" id="LogoImage">
+                        <img src="/static/images/logo.png">
+                    </div>
+                </div>
+                <div class="col-md-10 my-4 col-12">
+                    <div class="float-right UserLogout">
+                        {% if user.is_authenticated %}
+                        <p>Welcome <span>{{user.username}}</span></p>
+                        {% endif %}
+                        <p><b>&nbsp;&nbsp;|&nbsp;&nbsp;</b></p>
+                        <a href="/logout">Log out&nbsp;&nbsp;<i class="fa fa-sign-out"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12" id="MainMenu">
+                <nav class="BotMainMenu">
+                    <div id="BotMainMenuListDiv" class="BotMainMenuList">
+                        <ul class="BotMainMenulinks">
+                            <li id="bots"><a href="{{Menudata.0.Link}}"><i class="fa fa-tachometer"></i> {{Menudata.0.SubMenuName}}</a></li>
+                            <li id="groups"><a href="{{Menudata.1.Link}}"><i class="fa fa-pencil-square-o"></i> {{Menudata.1.SubMenuName}}</a></li>
+                            <li id="intents"><a href="{{Menudata.2.Link}}"><i class="fa fa-object-group"></i> {{Menudata.2.SubMenuName}}</a></li>
+                            <li id="manageusers"><a href="{{Menudata.3.Link}}"><i class="fa fa-users"></i> {{Menudata.3.SubMenuName}}</a></li>
+
+                            <li id="createusers"><a href="{{Menudata.4.Link}}"><i class="fa fa-user"></i> {{Menudata.4.SubMenuName}}</a></li>
+                        </ul>
+                    </div>
+                    <span class="BotMainMenuTrigger">
+                  <i></i>
+                  <i></i>
+                  <i></i>
+               </span>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+    {% block bots %}{% endblock %} {% block create-bot %} {% endblock %} {% block create-bot-form %}{% endblock %} {% block subuserregistration %}{% endblock %} {% block Manageusers %}{% endblock %} {% block create-intent %}{% endblock %} {% block create-intent-form%}
+    {% endblock %} {% block response %} {% endblock %} {% block create-group %}{% endblock %} {% block create-group-form %}{% endblock %} {% block group-intent %}{% endblock %} {% block bot-group %}{% endblock %}
+
+</body>
